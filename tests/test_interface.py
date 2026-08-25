@@ -84,6 +84,27 @@ def test_despachar_duplicata_propaga_erro():
         despachar("1", turma, ("1", "Beto"))
 
 
+def test_despachar_remover():
+    turma = [Aluno("1", "Ana"), Aluno("2", "Beto")]
+    msg = despachar("6", turma, ("1",))
+    assert "removido" in msg.lower()
+    assert len(turma) == 1
+    assert turma[0].matricula == "2"
+
+
+def test_menu_remover_aluno(monkeypatch, capsys, tmp_path):
+    entradas = iter(["1", "1", "Ana", "6", "1", "5"])
+    monkeypatch.setattr(builtins, "input", lambda *a: next(entradas))
+    turma = []
+    menu(turma, caminho=tmp_path / "saida.csv")
+    out = capsys.readouterr().out
+    assert "cadastrado" in out.lower()
+    assert "removido" in out.lower()
+    assert len(turma) == 0
+    conteudo = (tmp_path / "saida.csv").read_text(encoding="utf-8")
+    assert conteudo.strip() == "matricula,nome,nota1,nota2,nota3"
+
+
 def test_menu_fluxo_completo(monkeypatch, capsys, tmp_path):
     entradas = iter(["1", "1", "Ana", "2", "5"])
     monkeypatch.setattr(builtins, "input", lambda *a: next(entradas))

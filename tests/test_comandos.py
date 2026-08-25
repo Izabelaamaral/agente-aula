@@ -6,6 +6,7 @@ from notas.comandos import (
     cadastrar_aluno,
     existe_matricula,
     lancar_notas,
+    remover_aluno,
 )
 
 
@@ -49,3 +50,16 @@ def test_lancar_notas_atualiza_e_classifica():
 def test_lancar_notas_aluno_inexistente():
     with pytest.raises(ValueError):
         lancar_notas([], "x", 1, 2, 3)
+
+
+def test_remover_aluno_ok():
+    turma = [Aluno("1", "Ana"), Aluno("2", "Beto")]
+    removido = remover_aluno(turma, "1")
+    assert removido.matricula == "1"
+    assert len(turma) == 1
+    assert turma[0].matricula == "2"
+
+
+def test_remover_aluno_inexistente():
+    with pytest.raises(ValueError):
+        remover_aluno([], "9")

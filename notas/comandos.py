@@ -48,3 +48,17 @@ def lancar_notas(turma, matricula, nota1, nota2, nota3):
     aluno.nota2 = nota2
     aluno.nota3 = nota3
     return aluno
+
+
+def remover_aluno(turma, matricula):
+    """Remover um aluno da turma; gerar erro se nao encontrado.
+
+    Returns
+    -------
+    Aluno
+        O aluno removido.
+    """
+    aluno = buscar_aluno(turma, matricula)
+    turma.remove(aluno)
+    return aluno
+

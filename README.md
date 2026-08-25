@@ -36,6 +36,7 @@ python -m notas
  3. Lancar notas
  4. Buscar aluno
  5. Salvar e sair
+ 6. Remover aluno
 ========================================
 Opcao: 1
 Matricula: 2024001

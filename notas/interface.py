@@ -18,6 +18,7 @@ def mostrar_menu():
     print(" 3. Lancar notas")
     print(" 4. Buscar aluno")
     print(" 5. Salvar e sair")
+    print(" 6. Remover aluno")
     print("=" * 40)
 
 
@@ -55,7 +56,7 @@ def despachar(opcao, turma, entrada=None):
     Parameters
     ----------
     opcao : str
-        Opcao digitada ('1' a '5').
+        Opcao digitada ('1' a '6').
     turma : list[Aluno]
         Turma em memoria.
     entrada : tuple, opcional
@@ -85,6 +86,10 @@ def despachar(opcao, turma, entrada=None):
         return formatar_aluno(comandos.buscar_aluno(turma, matricula))
     if opcao == "5":
         return None
+    if opcao == "6":
+        (matricula,) = entrada
+        aluno = comandos.remover_aluno(turma, matricula)
+        return f"Aluno '{aluno.nome}' (matricula {aluno.matricula}) removido."
     return "Opcao invalida. Tente novamente."
 
 
@@ -99,6 +104,8 @@ def _coletar(opcao):
         n3 = float(input("Nota 3: "))
         return (matricula, n1, n2, n3)
     if opcao == "4":
+        return (input("Matricula: ").strip(),)
+    if opcao == "6":
         return (input("Matricula: ").strip(),)
     return None
 
@@ -129,5 +136,5 @@ def menu(turma, caminho=None):
             salvar(turma, destino)
             print("Dados salvos. Ate logo!")
             break
-        if opcao in ("1", "3"):
+        if opcao in ("1", "3", "6"):
             salvar(turma, destino)
